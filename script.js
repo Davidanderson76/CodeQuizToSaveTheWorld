@@ -17,6 +17,8 @@ const scoreContainer = document.getElementById("scoreContainer");
 
 
  // Making my questions into an array which has an object inside
+
+ // MAKING THE QUESTIONS
   
 let questions = [
     {
@@ -101,7 +103,7 @@ let questions = [
     },
 ];
 
-// MAKING THE QUESTIONS
+// Variables
 
 let lastQuestionIndex = questions.length - 1;
 let runningQuestionIndex = 0;
@@ -125,10 +127,40 @@ function progress(){
     }
 }
 
-//shows correct answer
+//Shows Correct Answer
 function answerCorrect(){
     document.getElementById(runningQuestionIndex).style.backgroundColor = "green"
 }
 
+//Shows Wrong Answer
+function answerWrong(){
+    document.getElementById(runningQuestionIndex).style.backgroundColor = "red";
+}
 
+//Making the timer work on each individual question
+
+const questionTime = 10;
+const timerWidth = 150;
+let count = 0;
+const timerProgress = timerWidth/questionTime;
+
+//Making the timer show the status of how much time you have left
+
+function counterRender(){
+    if(count <= questionTime) {
+        counter.innerHTML = count;
+        timer.style.width = timerProgress * count + "px";
+        count++;
+    }else{
+        count = 0;
+        answerWrong();
+        if( runningQuestionIndex < lastQuestionIndex){
+            runningQuestionIndex++;
+            renderQuestion();
+        }else{
+            clearInterval(timer);
+            scoreRender();
+        } 
+    }
+}
 
